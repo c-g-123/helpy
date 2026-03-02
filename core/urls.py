@@ -3,15 +3,11 @@ from django.urls import path
 from core import views
 
 
-app_name = 'rango'
+app_name = 'core'
+
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('home/', views.home, name='home'),
-    path('about/', views.about, name='about'),
-    # Is this page really necessary?
-    # path('contact/', views.contact, name='contact'),
-    path('faq/', views.faq, name='faq'),
+    path('', views.calendar, name='index'),  # WARNING views.calendar will need to be changed to the default view chosen by the user.
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('calendar/', views.calendar, name='calendar'),
