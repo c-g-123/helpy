@@ -1,0 +1,82 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+
+# ===============================
+# Django
+# ===============================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Migrations (remove if you want to track them).
+# */migrations/*
+# !*/migrations/__init__.py
+
+# ===============================
+# Environment variables
+# ===============================
+.env
+.env.*
+*.env
+
+# ===============================
+# Docker
+# ===============================
+*.pid
+*.seed
+*.pid.lock
+
+# Docker override files (optional).
+docker-compose.override.yml
+
+# ===============================
+# Database
+# ===============================
+*.sqlite3
+*.dump
+
+# ===============================
+# Logs
+# ===============================
+logs/
+*.log
+
+# ===============================
+# Coverage / Testing
+# ===============================
+htmlcov/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# ===============================
+# IDE / Editor
+# ===============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===============================
+# OS Files
+# ===============================
+.DS_Store
+Thumbs.db
