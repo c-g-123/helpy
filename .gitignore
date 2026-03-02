@@ -35,6 +35,8 @@ staticfiles/
 # ===============================
 # Docker
 # ===============================
+docker-compose.yml
+Dockerfile
 *.pid
 *.seed
 *.pid.lock
