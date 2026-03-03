@@ -16,3 +16,6 @@ def about(request):
 
 def faq(request):
     return render(request, 'faq.html')
+
+
+#I was there!!!!
