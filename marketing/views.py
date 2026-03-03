@@ -17,3 +17,8 @@ def about(request):
 def faq(request):
     return render(request, 'faq.html')
 
+
+#
+#
+#
+#Vova was here!!!!
