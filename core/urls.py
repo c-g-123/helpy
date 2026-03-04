@@ -2,6 +2,7 @@ from django.urls import path
 
 from core import views
 
+
 app_name = 'core'
 
 
@@ -12,15 +13,24 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
 
-    # Other
+    # Aggregation
 
-    path('', views.home, name='index'),
     path('calendar/', views.calendar, name='calendar'),
     path('agenda/', views.agenda, name='agenda'),
     path('kanban/', views.kanban, name='kanban'),
-    path('project/', views.project, name='project'),
+
+    # Project
+
     path('project/create', views.create_project, name='create_project'),
-    path('task/', views.task, name='task'),
+    path('project/', views.project, name='project'),
+
+    # Task
+
     path('task/create', views.create_task, name='create_task'),
+    path('task/', views.task, name='task'),
+
+    # Other
+
+    path('', views.home, name='index'),
     path('account/', views.account, name='account'),
 ]
