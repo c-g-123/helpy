@@ -12,7 +12,7 @@
         <label>Select Project:</label><br/>
         <select name="project_id">
             <option value="">-- Select a project --</option>
-            {% for project in projects %}
+            {% for project in user_projects %}
                 <option value="{{ project.id }}">{{ project.name }}</option>
             {% endfor %}
         </select><br/>
