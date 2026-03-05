@@ -12,3 +12,20 @@
 body{
     background-color: var(--lightest);
 }
+
+
+#calendar{
+    background-color: var(--mid);
+    padding:5px;
+    display: flex;
+}
+
+.calendar_day{
+    padding:5px;
+    margin: 5px;
+    background-color: var(--light);
+}
+
+.agenda_day{
+    
+}
