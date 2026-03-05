@@ -16,26 +16,38 @@ def get_or_create_user(username, password):
         user.save()
     return user
 
+def get_or_create_superuser(username, email, password):
+    user, created = User.objects.get_or_create(username=username, email=email)
+    if created:
+        user.set_password(password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+    return user
+
+
 def populate():
     user_1 = get_or_create_user('alice', 'password123')
     user_2 = get_or_create_user('bob', 'password123')
 
+    superuser_1 = get_or_create_superuser('superman', 'batman@againstcrime.com', '123456789')
+
     now = timezone.now()
 
     project_1_tasks = [
-        {'name': 'Setup Django', 
+        {'name': 'task_1', 
          'description': 'Initialize the project and apps.', 
          'set_date': now, 
          'due_date': now + timedelta(days=2),
          'sub_tasks': [
                 {
-                    'name': 'Install dependencies', 
+                    'name': 'task_1.1', 
                     'description': 'pip install django', 
                     'set_date': now, 
-                    'due_date': now + timedelta(days=1)
+                    'due_date': now + timedelta(days=1),
                 },
                 {
-                    'name': 'Configure settings.py', 
+                    'name': 'task_1.2', 
                     'description': 'Set up database and templates.', 
                     'set_date': now, 
                     'due_date': now + timedelta(days=2)
@@ -43,18 +55,18 @@ def populate():
             ]
         },
 
-        {'name': 'Design Database', 
+        {'name': 'task_2', 
          'description': 'Map out the models and relationships.', 
          'set_date': now, 
          'due_date': now + timedelta(days=4)},
     ]
     
     project_2_tasks = [
-        {'name': 'Build Frontend', 
+        {'name': 'task_1', 
          'description': 'Create HTML templates and CSS.', 
          'set_date': now, 
          'due_date': now + timedelta(days=7)},
-        {'name': 'Write Tests', 
+        {'name': 'task_2', 
          'description': 'Ensure test coverage is above 80%.', 
          'set_date': now + timedelta(days=1), 
          'due_date': now + timedelta(days=10)},
