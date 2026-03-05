@@ -32,6 +32,10 @@ class Project(models.Model):
 class Task(models.Model):
 
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    parent_task_id = models.ForeignKey('self',
+                                       on_delete=models.CASCADE,
+                                       null=True,  # Allow top level tasks to have no parent.
+                                       blank=True,)
     name = models.CharField(max_length=_MAX_ITEM_NAME_LENGTH)
     description = models.CharField(max_length=_MAX_DESCRIPTION_LENGTH)
     set_date = models.DateTimeField()
