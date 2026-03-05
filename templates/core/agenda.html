@@ -1,14 +1,12 @@
-{% extends 'core/base.html' %}
+{% extends 'core/navigation_base.html' %}
 
-{% block title_block %}
+{% block title %}
     Agenda
 {% endblock %}
 
-{% block body_block %}
+{% block body_after_navigation %}
     <h1>Agenda</h1>
-
     <a href="{% url 'core:create_task' %}">Add task</a>
-
     {% if tasks %}
         <ul>
             {% for task in tasks %}
@@ -29,4 +27,4 @@
     {% else %}
         <p>No tasks yet.</p>
     {% endif %}
-{% endblock %}
+{% endblock %}}
