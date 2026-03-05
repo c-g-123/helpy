@@ -17,7 +17,26 @@ _MAX_DESCRIPTION_LENGTH = 300
 #
 #     def __str__(self):
 #         return self.user.username
+class UserSettings(models.Model):
 
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    THEME_CHOICES = [
+        ('light', 'Light'),
+        ('dark', 'Dark'),
+    ]
+    DEFAULT_PAGE_CHOICES = [
+        ('agenda', 'Agenda'),
+        ('calendar', 'Calendar'),
+        ('kanban', 'Kanban'),
+        ('project', 'Project'),
+    ]
+    
+    theme = models.CharField(max_length=10, choices=THEME_CHOICES, default='light')
+    default_page = models.CharField(max_length=20, choices=DEFAULT_PAGE_CHOICES, default='agenda')
+
+    def __str__(self):
+        return f"{self.user_id.username}'s settings"
 
 class Project(models.Model):
 
