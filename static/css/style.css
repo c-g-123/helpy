@@ -1,2 +1,14 @@
+:root{
+    --lightest:#dadada;
+    --light:#b2b2b2;
+    --mid:#707070;
+    --dark:#4d4d4d;
+    --darkest:#262626;
+
+}
+
+
+
 body{
+    background-color: var(--lightest);
 }
