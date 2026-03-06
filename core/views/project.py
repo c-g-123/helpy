@@ -21,5 +21,5 @@ def create_project(request):
 
 
 @login_required
-def project(request, project_id):
+def project(request):
     return render(request, 'core/project.html')
