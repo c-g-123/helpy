@@ -1,25 +1,34 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from core.models import Project
+from core.forms import ProjectForm
 
 
 @login_required
 def create_project(request):
-    if request.method != "POST":
-        return render(request, 'core/create_project.html')
-    
-    name = (request.POST.get("name") or "").strip()
+    context = {}
 
-    if not name:
-        return render(request, 'core/create_project.html', {'error_message': 'Project name is required.'})
-    
-    Project.objects.create(user_id=request.user, name=name)  # Create the project for the currently logged-in user.
+    if request.method == "GET":
+        form = ProjectForm()
+        context['form'] = form
+        return render(request, 'core/create_project.html', context)
 
-    return redirect(reverse("core:agenda"))  # Redirect to agenda for now, can be changed later to project details page.
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        context['form'] = form
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.user_id = request.user
+            project.save()
+            return redirect(reverse("core:project", args=[project.id]))
+
+        return render(request, "core/create_project.html", context)
+
+    return HttpResponseNotAllowed(['GET', 'POST'])
 
 
 @login_required
-def project(request, project_id):
+def view_project(request, project_id):
     return render(request, 'core/project.html')

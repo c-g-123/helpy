@@ -9,13 +9,7 @@
 
     <form method="post" action="{% url 'core:create_project' %}">
         {% csrf_token %}
-
-        <input type="text" name="name" placeholder="Project Name" size="50"/><br/>
-
-        {% if error_message %}
-            {{ error_message }}<br/>
-        {% endif %}
-
-        <input type="submit" value="Create Project"/>
+        {{ form.as_p }}
+        <button type="submit">Create</button>
     </form>
 {% endblock %}

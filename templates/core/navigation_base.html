@@ -5,12 +5,10 @@
             <div id="nav_bar">
                 <a class="left"  href="{% url 'core:agenda' %}">agenda</a>
                 <a class="left" href="{% url 'core:calendar' %}">calendar</a>
-                <a class="left" href="{% url 'core:kanban' %}">kanban</button>
-                <a class="left" href="{% url 'core:project' %}">project</a>
-
+                <a class="left" href="{% url 'core:kanban' %}">kanban</a>
                 <a class="right">account</a>
             </div>
-    {% endblock%}
+    {% endblock %}
 
     {% block body_after_navigation %}
     {% endblock %}

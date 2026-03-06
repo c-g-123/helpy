@@ -4,6 +4,13 @@ from core.models import Project, Task
 
 class ProjectForm(forms.ModelForm):
 
+    name = forms.CharField(
+        max_length=Project._meta.get_field("name").max_length,
+        widget=forms.TextInput(attrs={
+            "placeholder": "Name"
+        })
+    )
+
     class Meta:
         model = Project
         fields = [
@@ -14,12 +21,14 @@ class ProjectForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
 
     name = forms.CharField(
+        max_length=Task._meta.get_field("name").max_length,
         widget=forms.TextInput(attrs={
             "placeholder": "Name"
         })
     )
 
     description = forms.CharField(
+        max_length=Task._meta.get_field("description").max_length,
         required=False,
         widget=forms.TextInput(attrs={
             "placeholder": "Description"
