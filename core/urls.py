@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('project/create', views.create_project, name='create_project'),
     path('project/', views.project, name='project'),
+    path('getProjects', views.getProjects, name='getProjects'),
 
     # Task
 

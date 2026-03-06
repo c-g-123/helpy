@@ -4,6 +4,9 @@ from django.urls import reverse
 
 from core.models import Project
 
+#so can return Json
+from django.http import JsonResponse
+
 
 @login_required
 def create_project(request):
@@ -23,3 +26,8 @@ def create_project(request):
 @login_required
 def project(request):
     return render(request, 'core/project.html')
+    
+
+def getProjects(request):
+    projects = Project.objects.all()
+    return JsonResponse({"projects":list(projects.values())})

@@ -10,8 +10,17 @@
     <div id="project_sidebar">
        
         should essentaily have the same content as create project as well as display the list of projects witht heir sub tasks
+        {% for project in project %}
+            <h1>project.name</h1>
 
+        {%endfor%}
         <button>Create Project</button>
+
+
+
+        <h1>list of live projects</h1>
+
+        <ul id="display-projects">
     </div>
 
     <div id="content">
@@ -22,4 +31,29 @@
     </div>
 
 
+    <script>
+    console.log("heeewjewoelo")
+    $(document).ready(function(){
+        setInterval(function(){
+            $.ajax({
+                type:'Get',
+                url: "{%url 'core:getProjects'%}",
+                success: function(response){
+                    $("#display-projects").empty();
+                    for(var key in response.projects){
+                        var temp="<li>" + response.projects[key].name+"</li>"
+                        $("#display-projects").append(temp);
+                    }
+                },
+                error:function(response){
+                    alert("an error occoured");
+                }
+            })
+        },1000)
+    });
+
+    console.log("heelo")
+    </script>
+
 {% endblock %}
+
