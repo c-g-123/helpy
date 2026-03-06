@@ -8,7 +8,7 @@ _MAX_DESCRIPTION_LENGTH = 300
 
 class UserSettings(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     THEME_CHOICES = [
         ('light', 'Light'),
