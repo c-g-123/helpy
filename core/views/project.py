@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from core.forms import ProjectForm
-from core.models import Project
+from core.models import Project, Task
 
 
 @login_required
@@ -33,8 +33,10 @@ def create_project(request):
 @login_required
 def view_project(request, project_id):
     project = Project.objects.get(id=project_id, user_id=request.user)
+    tasks = Task.objects.filter(project_id=project, project_id__user_id=request.user)
     context = {
         'project': project,
+        'tasks': tasks
     }
 
     if request.method == 'GET':
