@@ -6,17 +6,6 @@ _MAX_ITEM_NAME_LENGTH = 50
 _MAX_FILENAME_LENGTH = 50
 _MAX_DESCRIPTION_LENGTH = 300
 
-
-# Uncomment this if we decide to add more fields to the user model than django.contrib.auth provides.
-# class UserProfile(models.Model):
-#
-#     # This line is required. Links UserProfile to a User model instance.
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)  # Import from django.contrib.auth.
-#
-#     # The additional attributes we wish to include...
-#
-#     def __str__(self):
-#         return self.user.username
 class UserSettings(models.Model):
 
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,7 +29,7 @@ class UserSettings(models.Model):
 
 class Project(models.Model):
 
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=_MAX_ITEM_NAME_LENGTH)
     # Should colour be a foreign key for a colour table? Otherwise, enums will suffice.
 
@@ -50,17 +39,35 @@ class Project(models.Model):
 
 class Task(models.Model):
 
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    parent_task_id = models.ForeignKey('self',
-                                       on_delete=models.CASCADE,
-                                       null=True,  # Allow top level tasks to have no parent.
-                                       blank=True,)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE
+    )
+    parent_task= models.ForeignKey(
+        'self',
+           on_delete=models.CASCADE,
+           null=True,  # Allow top level tasks to have no parent.
+           blank=True,
+    )
     name = models.CharField(max_length=_MAX_ITEM_NAME_LENGTH)
-    description = models.CharField(max_length=_MAX_DESCRIPTION_LENGTH)
-    set_date = models.DateTimeField()
-    due_date = models.DateTimeField()
+    description = models.CharField(
+        max_length=_MAX_DESCRIPTION_LENGTH,
+        null=True,
+        blank=True,
+    )
+    set_date = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    due_date = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
     # Should status be a foreign key for a status table? Otherwise, enums will suffice.
     # Should priority be a foreign key for a priority table? Otherwise, enums will suffice.
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
@@ -72,6 +79,6 @@ class Tag(models.Model):
 
 class Resource(models.Model):
 
-    task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     name = models.CharField(max_length=_MAX_ITEM_NAME_LENGTH)
     added_date = models.DateTimeField()

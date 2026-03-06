@@ -21,16 +21,17 @@ urlpatterns = [
 
     # Project
 
-    path('project/create', views.create_project, name='create_project'),
-    path('project/', views.project, name='project'),
+    path('project/create/', views.create_project, name='create_project'),
+    path('project/<int:project_id>/', views.project, name='project'),
+    path('projects/', views.projects, name='projects'),
 
     # Task
 
-    path('task/create', views.create_task, name='create_task'),
-    path('task/', views.task, name='task'),
+    path('task/create/', views.create_task, name='create_task'),
+    path('task/<int:task_id>/', views.task, name='task'),
 
     # Other
 
-    path('', views.home, name='index'),
+    path('', views.index, name='index'),
     path('account/', views.account, name='account'),
 ]

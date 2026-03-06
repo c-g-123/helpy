@@ -1,54 +1,46 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.utils.dateparse import parse_datetime
 
-from core.models import Project, Task
-from core.views.utils import render_error_message
+from core.forms import TaskForm
+from core.models import Task
 
 
 @login_required
 def create_task(request):
-    user_projects = Project.objects.filter(user_id=request.user)  # Get only the projects that belong to the user, so that they can only assign tasks to their own projects.
-    
-    context = {
-        'user_projects': user_projects,
-    }
+    if request.method == 'GET':
+        form = TaskForm(user=request.user)
+    elif request.method == 'POST':
+        form = TaskForm(request.POST, user=request.user)
 
-    if request.method != 'POST':
-        return render(request, 'core/create_task.html', context)
+        if form.is_valid():
+            task = form.save()
+            return redirect(reverse('core:task', args=[task.id]))
+    else:
+        return HttpResponseNotAllowed(['GET', 'POST'])
 
-    project_id = request.POST.get('project_id')
-    name = (request.POST.get('name') or '').strip()
-    description = (request.POST.get('description') or '').strip()
-    set_date_raw = request.POST.get('set_date')
-    due_date_raw = request.POST.get('due_date')
-
-    if not project_id:
-        return render_error_message(request, 'core/create_task.html', 'Choose a project.')
-    if not name:
-        return render_error_message(request, 'core/create_task.html', 'Choose a task name.')
-    if not description:
-        return render_error_message(request, 'core/create_task.html', 'Choose a description.')
-
-    # Parse the date strings into datetime objects.
-    set_date = parse_datetime(set_date_raw) if set_date_raw else None
-    due_date = parse_datetime(due_date_raw) if due_date_raw else None 
-
-    if not set_date or not due_date:
-        return render_error_message(request, 'core/create_task.html', 'Choose the dates and times.')
-    
-    # Ensure the selected project belongs to the user.
-    try:
-        project = user_projects.get(id=project_id)
-    except Project.DoesNotExist:
-        return render_error_message(request, 'core/create_task.html', 'Choose a project of your own.')
-
-    Task.objects.create(project_id=project, name=name, description=description, set_date=set_date, due_date=due_date)
-
-    return redirect(reverse('core:agenda'))  # Redirect to the agenda view.
+    return render(request, 'core/task/create_task.html', {'form': form})
 
 
 @login_required
-def task(request, task_id):
-    return render(request, 'core/task.html')
+def view_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, project__user=request.user)
+
+    if request.method == 'GET':
+        form = TaskForm(instance=task, user=request.user)
+    elif request.method == 'POST':
+        form = TaskForm(request.POST, instance=task, user=request.user)
+
+        if form.is_valid():
+            task = form.save()
+            return redirect(reverse('core:task', args=[task.id]))
+    else:
+        return HttpResponseNotAllowed(['GET', 'POST'])
+
+    context = {
+        'task': task,
+        'form': form,
+    }
+
+    return render(request, 'core/task/task.html', context)
