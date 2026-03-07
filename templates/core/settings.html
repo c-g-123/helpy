@@ -5,5 +5,11 @@
 {% endblock %}
 
 {% block body_after_navigation %}
-    <h1>Settings</h1>
+    <h1>Account settings</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
 {% endblock %}
