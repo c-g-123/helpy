@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Project, Task
+from core.models import Project, Task, UserSettings
 
 
 class ProjectForm(forms.ModelForm):
@@ -60,3 +60,12 @@ class TaskForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields["project"].queryset = Project.objects.filter(user=user)
+
+class UserSettingsForm(forms.ModelForm):
+
+    class Meta:
+        model = UserSettings
+        fields = [
+            "theme",
+            "default_page",
+        ]
