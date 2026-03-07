@@ -7,9 +7,22 @@
 {% block body_after_navigation %}
     <h1>Account settings</h1>
 
+    <h2>Account</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <input type="hidden" name="form_type" value="email">
+
+        <label>Email:</label>
+        {{ email_form.email }}
         <button type="submit">Save</button>
+
+    </form>
+
+    <h2>Preferences</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="settings">
+        {{ settings_form.as_p }}
+        <button type="submit">Save Preferences</button>
     </form>
 {% endblock %}
