@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Task, Project, Tag, Resource
+from core.models import Task, Project, Tag, Resource, UserSettings
 
 
 @admin.register(Project)  # This decorator is the same as writing admin.site.register(Class, ClassAdmin) at the end of this file.
@@ -20,3 +20,7 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
     list_display = ('name', 'added_date')
+
+@admin.register(UserSettings)
+class UserSettingsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'theme', 'default_page')

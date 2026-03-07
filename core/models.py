@@ -26,6 +26,10 @@ class UserSettings(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s settings"
+    
+    class Meta:
+        verbose_name = "User settings"
+        verbose_name_plural = "User settings"
 
 class Project(models.Model):
 
