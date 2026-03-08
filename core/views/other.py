@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib import auth
 
 from core.models import UserSettings
 from core.forms import UserSettingsForm, UserEmailForm, UsernameForm
@@ -51,6 +52,12 @@ def account(request):
                 update_session_auth_hash(request, user)  # Important to keep the user logged in after password change.
                 return redirect('core:account')
         
+        elif form_type == 'delete_account':
+            user = request.user
+            auth.logout(request)
+            user.delete()
+            return redirect('core:index')
+
     context = {
         'settings_form': settings_form,
         'email_form': email_form,
