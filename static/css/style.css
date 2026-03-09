@@ -1,17 +1,52 @@
-:root{
+:root {
+
     --lightest:#dadada;
     --light:#b2b2b2;
     --mid:#707070;
     --dark:#4d4d4d;
     --darkest:#262626;
 
+    font-family: sans-serif;
+
 }
 
 
+.navigation_bar {
 
-body{
-    background-color: var(--lightest);
+    --background-colour: #1A1B25;
+    --font-colour: white;
+    --background-hover-colour: #282A3B;
+
+    display: flex;
+    align-items: center;
+
+    background-color: var(--background-colour);
+    color: var(--font-colour);
+
+    a {
+
+        padding: 30px;
+
+        text-decoration: none;
+
+    }
+
+    a:hover {
+
+        background-color: var(--background-hover-colour);
+
+    }
+
+    a:visited {
+
+        color: var(--font-colour);  /* Do not change colour if the link has been visited. */
+
+    }
+
 }
+
+
+/* ================================================================================== */
 
 
 #calendar{
@@ -28,57 +63,6 @@ body{
 
 .agenda_day{
     
-}
-
-a{
-    font-size:30px;
-    padding: 5px;
-    margin: 5px;
-    background-color: var(--dark);
-    color: var(--lightest);
-    text-decoration: none;
-}
-
-a:hover{
-    background-color: var(--mid);
-}
-
-a.left{
-    text-align: left;
-
-}
-
-a.right{
-    margin-left:auto;
-}
-
-#nav_bar{
-    display: flex;
-    align-items:center;
-}
-
-#welcome_nav_bar {
-    position: absolute;
-    top: 0;
-    left: 0;                
-    width: 100%;            
-    box-sizing: border-box;   
-    background-color: var(--darkest); 
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px; 
-    padding: 10px 25px;
-}
-
-#welcome_nav_bar a {
-    text-decoration: none;
-    padding: 3px 7px;
-    background-color: #555;   
-    color: white;
-}
-
-#welcome_nav_bar a:hover {
-    background-color: #333;
 }
 
 #welcome {

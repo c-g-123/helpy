@@ -7,9 +7,9 @@
 
 {% block body %}
     {% block navigation %}
-        <div id="welcome_nav_bar">
-            <img src="{% static 'images/testcat.jpeg' %}" alt="Helpy Logo" height="50" style="margin-right: auto;">
-            <a href="{% url 'core:login' %}">Login</a>
+        <div class="navigation_bar">
+            <img src="{% static 'images/testcat.jpeg' %}" alt="Helpy logo" height="85">
+            <a href="{% url 'core:login' %}" style="margin-left: auto">Login</a>
             <a href="{% url 'core:register' %}">Register</a>
         </div>
     {% endblock %}
