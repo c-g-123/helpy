@@ -11,40 +11,28 @@
 
 }
 
-
-.navigation_bar {
-
+.navigation-bar {
     --background-colour: #1A1B25;
     --background-hover-colour: #282A3B;
 
-    display: flex;
     align-items: center;
-
-    background-color: var(--background-colour);
     color: var(--font-colour);
-
-    a {
-
-        padding: 30px;
-
-        text-decoration: none;
-
-    }
-
-    a:hover {
-
-        background-color: var(--background-hover-colour);
-
-    }
-
-    a:visited {
-
-        color: var(--font-colour);  /* Do not change colour if the link has been visited. */
-
-    }
-
+    background-color: var(--background-colour);
+    display: flex;
 }
 
+.navigation-bar a {
+    padding: 30px;
+    text-decoration: none;
+}
+
+.navigation-bar a:hover {
+    background-color: var(--background-hover-colour);
+}
+
+.navigation-bar a:visited {
+    color: var(--font-colour);  /* Do not change colour if the link has been visited. */
+}
 
 /* ================================================================================== */
 

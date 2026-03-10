@@ -22,7 +22,7 @@ def create_project(request):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    return render(request, 'core/project/pages/create_project.html', {'form': form})
+    return render(request, 'core/project/pages/create-project.html', {'form': form})
 
 
 @login_required

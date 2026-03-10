@@ -9,7 +9,7 @@
         <ul>
             {% for task in tasks %}
                 <li>
-                    {% include 'core/task/components/task_preview.html' with task=task %}
+                    {% include 'core/task/components/task-card.html' with task=task %}
                 </li>
             {% endfor %}
         </ul>

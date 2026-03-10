@@ -13,7 +13,14 @@
 </head>
 <body>
     {% block navigation_bar %}
-        {% include 'core/components/navigation_bar.html' %}
+        <div class="navigation-bar">
+            <a href="{% url 'core:agenda' %}">Agenda</a>
+            <a href="{% url 'core:calendar' %}">Calendar</a>
+            <a href="{% url 'core:kanban' %}">Kanban</a>
+            <a href="{% url 'core:projects' %}">Projects</a>
+            <a href="{% url 'core:logout' %}" style="margin-left: auto">Logout</a>
+            <a href="{% url 'core:settings' %}">Settings</a>
+        </div>
     {% endblock %}
     {% block body %}
     {% endblock %}
