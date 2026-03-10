@@ -12,12 +12,12 @@
 }
 
 .navigation-bar {
-    --background-colour: #1A1B25;
-    --background-hover-colour: #282A3B;
+    --navigation-bar-background-colour: #1A1B25;
+    --navigation-bar-background-hover-colour: #282A3B;
 
     align-items: center;
     color: var(--font-colour);
-    background-color: var(--background-colour);
+    background-color: var(--navigation-bar-background-colour);
     display: flex;
 }
 
@@ -27,11 +27,46 @@
 }
 
 .navigation-bar a:hover {
-    background-color: var(--background-hover-colour);
+    background-color: var(--navigation-bar-background-hover-colour);
 }
 
 .navigation-bar a:visited {
     color: var(--font-colour);  /* Do not change colour if the link has been visited. */
+}
+
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.credentials-box {
+    background-color: var(--light);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.task-card {
+    --task-card-background-colour: white;
+    --task-card-background-hover-colour: grey;
+
+    padding: 30px;
+    background-color: var(--task-card-background-colour);
+    display: block;
+    text-decoration: none;
+}
+
+.task-card:hover {
+    background-color: var(--task-card-background-hover-colour);
+}
+
+.task-card:visited {
+    padding: 30px;
+    display: block;
+    color: black;  /* Do not change colour if the link has been visited. */
 }
 
 /* ================================================================================== */

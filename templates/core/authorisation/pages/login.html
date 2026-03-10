@@ -8,15 +8,19 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.username.label_tag }}
-        {{ form.username }}<br/>
-        {{ form.password.label_tag }}
-        {{ form.password }}<br/>
-        {{ form.non_field_errors }}<br/>
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'core:register' %}">Sign up</a>.</p>
+    <div class="center-wrapper">
+        <div class="credentials-box">
+            <h1>Login</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.username.label_tag }}
+                {{ form.username }}<br/>
+                {{ form.password.label_tag }}
+                {{ form.password }}<br/>
+                {{ form.non_field_errors }}<br/>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="{% url 'core:register' %}">Sign up</a>.</p>
+        </div>
+    </div>
 {% endblock %}
