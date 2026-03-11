@@ -15,7 +15,6 @@
                         {% include 'core/task/task-card.html' with task=task %}
                     {% endfor %}
                 </li>
-                <a href="{% url 'core:create_task' %}?project={{ task.project }}&due-datetime={{ day_data.due_datetime }}">Add task</a>
             {% endfor %}
         </ul>
     {% else %}
