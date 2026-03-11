@@ -11,6 +11,8 @@ from core.models import Task
 def create_task(request):
     if request.method == 'GET':
         form = TaskForm(user=request.user)
+        form.project = request.GET.get('project')
+        form.due_datetime = request.GET.get('due_datetime')
     elif request.method == 'POST':
         form = TaskForm(request.POST, user=request.user)
 
