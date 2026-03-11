@@ -10,7 +10,7 @@ from core.forms import RegisterForm, LoginForm
 def register(request):
     if request.method != 'POST':
         form = RegisterForm()
-        return render(request, 'core/authorisation/pages/register.html', {'form': form})
+        return render(request, 'core/authentication/register.html', {'form': form})
 
     form = RegisterForm(request.POST)
 
@@ -22,7 +22,7 @@ def register(request):
         auth.login(request, user)
         return redirect(reverse("core:calendar"))
 
-    return render(request, 'core/authorisation/pages/register.html', {'form': form})
+    return render(request, 'core/authentication/register.html', {'form': form})
 
 
 def login(request):
@@ -31,7 +31,7 @@ def login(request):
 
     if request.method != "POST":
         form = LoginForm()
-        return render(request, 'core/authorisation/pages/login.html', {'form': form})
+        return render(request, 'core/authentication/login.html', {'form': form})
 
     form = LoginForm(request.POST)
 
@@ -39,7 +39,7 @@ def login(request):
         auth.login(request, form.cleaned_data["authenticated_user"])
         return redirect(reverse("core:calendar"))
 
-    return render(request, "core/authorisation/pages/login.html", {"form": form})
+    return render(request, "core/authentication/login.html", {"form": form})
 
 
 @login_required

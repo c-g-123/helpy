@@ -62,4 +62,4 @@ def settings(request):
         'password_form': password_form,
     }
 
-    return render(request, 'core/user/pages/settings.html', context)
+    return render(request, 'core/settings/settings.html', context)
