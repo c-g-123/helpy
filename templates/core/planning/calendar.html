@@ -1,44 +1,38 @@
 {% extends 'core/base.html' %}
 
-{% block title %}
-    Calendar
-{% endblock %}
+{% block title %}Calendar{% endblock %}
 
 {% block body %}
-    <h1>Calendar</h1>
-    <div class="calendar">
-        <div class="month">
-            <div class="day">1</div>
-            <div class="day">2</div>
-            <div class="day">3</div>
-            <div class="day">4</div>
-            <div class="day">5</div>
-            <div class="day">6</div>
-            <div class="day">7</div>
-            <div class="day">8</div>
-            <div class="day">9</div>
-            <div class="day">10</div>
-            <div class="day">11</div>
-            <div class="day">12</div>
-            <div class="day">13</div>
-            <div class="day">14</div>
-            <div class="day">15</div>
-            <div class="day">16</div>
-            <div class="day">17</div>
-            <div class="day">18</div>
-            <div class="day">19</div>
-            <div class="day">20</div>
-            <div class="day">21</div>
-            <div class="day">22</div>
-            <div class="day">23</div>
-            <div class="day">24</div>
-            <div class="day">25</div>
-            <div class="day">26</div>
-            <div class="day">27</div>
-            <div class="day">28</div>
-            <div class="day">29</div>
-            <div class="day">30</div>
-            <div class="day">31</div>
+    <div class="dashboard-container" style="max-width: 1000px;">
+        <div class="calendar-header dashboard-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: none;">
+            <a href="?month={{ prev_month }}&year={{ prev_year }}" class="btn-save" style="text-decoration: none; padding: 5px 15px;">&lt;&lt;&lt;</a>
+            <h1 style="margin: 0; text-align: center; flex-grow: 1; letter-spacing: 2px;">{{ month_name }} {{ year }}</h1>
+            <a href="?month={{ next_month }}&year={{ next_year }}" class="btn-save" style="text-decoration: none; padding: 5px 15px;">&gt;&gt;&gt;</a>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="weekday-header">Mon</div>
+            <div class="weekday-header">Tue</div>
+            <div class="weekday-header">Wed</div>
+            <div class="weekday-header">Thu</div>
+            <div class="weekday-header">Fri</div>
+            <div class="weekday-header">Sat</div>
+            <div class="weekday-header">Sun</div>
+
+            {% for week in month_matrix %}
+                {% for day_data in week %}
+                    <div class="calendar-cell {% if day_data.day == 0 %}empty{% endif %}">
+                        {% if day_data.day != 0 %}
+                            <span class="day-number">{{ day_data.day }}</span>
+                            <div class="task-list">
+                                {% for task in day_data.tasks %}
+                                    <a href="{% url 'core:task' task.id %}" class="calendar-task">{{ task.name }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

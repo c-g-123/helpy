@@ -319,3 +319,79 @@ input:focus, select:focus {
     margin-bottom: 15px;
     margin-top: 35px;
 }
+
+/* --- Modern Calendar Styling --- */
+.calendar-grid {
+    display: grid;
+    /* Forces exactly 7 equal columns for the days of the week */
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 1px; /* Creates thin borders between cells */
+    background-color: var(--border-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.weekday-header {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calendar-cell {
+    background-color: var(--container-bg);
+    min-height: 120px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s;
+}
+
+.calendar-cell:hover:not(.empty) {
+    background-color: #fff9f5; /* Subtle highlight on hover */
+}
+
+.calendar-cell.empty {
+    background-color: #f9f6f2; /* Greyed out look for days from other months */
+}
+
+.day-number {
+    align-self: flex-end;
+    font-weight: bold;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* --- Task Pills inside Calendar --- */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.calendar-task {
+    background-color: rgba(139, 90, 43, 0.1) !important;
+    color: var(--primary) !important;
+    padding: 4px 8px !important;
+    border-radius: 4px;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Keeps long task names neat */
+    border-left: 3px solid var(--primary);
+    text-decoration: none;
+    display: block;
+}
+
+.calendar-task:hover {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
