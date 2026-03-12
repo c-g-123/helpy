@@ -51,11 +51,13 @@ def view_task(request, task_id):
         return HttpResponseNotAllowed(['GET', 'POST'])
 
     subtasks = Task.objects.filter(parent_task=task, project__user=request.user)
+    breadcrumbs = task.get_breadcrumbs()
 
     context = {
         'task': task,
         'form': form,
         'subtasks': subtasks,
+        'breadcrumbs': breadcrumbs,
     }
 
     return render(request, 'core/task/task.html', context)

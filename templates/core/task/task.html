@@ -5,6 +5,20 @@
 {% endblock %}
 
 {% block body %}
+    <nav>
+        <a href="{% url 'core:projects' %}">Projects</a> &rsaquo;
+        <a href="{% url 'core:project' task.project.id %}">{{ task.project.name }}</a>
+
+        {% for breadcrumb in breadcrumbs %}
+            &rsaquo;
+            {% if forloop.last %}
+                <span>{{ breadcrumb.name }}</span>
+            {% else %}
+                <a href="{% url 'core:task' breadcrumb.id %}">{{ breadcrumb.name }}</a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+    
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
