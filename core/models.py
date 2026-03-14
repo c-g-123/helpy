@@ -73,6 +73,16 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
+    def get_breadcrumbs(self):
+        breadcrumbs = []
+        current_task = self
+
+        while current_task is not None:
+            breadcrumbs.append(current_task)
+            current_task = current_task.parent_task
+        
+        breadcrumbs.reverse()
+        return breadcrumbs
 
 class Tag(models.Model):
 
