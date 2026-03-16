@@ -26,7 +26,8 @@ def calendar(request):
     tasks = Task.objects.filter(
         project__user=request.user,
         due_datetime__year=year,
-        due_datetime__month=month
+        due_datetime__month=month,
+        parent_task__isnull=True # Only show top-level tasks on the calendar. Subtasks will be shown on the task detail page.
     )
 
     # 3. Group tasks by their specific day
