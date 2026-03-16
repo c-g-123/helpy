@@ -10,8 +10,8 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        repeat_password = cleaned_data.get("repeat_password")
+        password = cleaned_data["password"]
+        repeat_password = cleaned_data["repeat_password"]
 
         if password and repeat_password and password != repeat_password:
             raise forms.ValidationError("Passwords do not match.")
@@ -26,8 +26,8 @@ class LoginForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get("username")
-        password = cleaned_data.get("password")
+        username = cleaned_data["username"]
+        password = cleaned_data["password"]
 
         if username and password:
             user = authenticate(username=username, password=password)
@@ -36,5 +36,7 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError("Invalid username or password.")
             if not user.is_active:
                 raise forms.ValidationError("Your account is disabled.")
+
+            cleaned_data["authenticated_user"] = user
 
         return cleaned_data

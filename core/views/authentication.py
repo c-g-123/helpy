@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.urls import reverse
 
 from core.forms import RegisterForm, LoginForm
+from core.models import UserSettings
 
 
 def register(request):
@@ -25,8 +26,9 @@ def register(request):
                 password=password
             )
 
-            auth.login(request, user)
-            return redirect(reverse("core:calendar"))
+            UserSettings.objects.get_or_create(user=user)
+
+            return _login_and_go_to_default_board(request, user)
 
         return render(request, "core/authentication/register.html", {"form": form})
 
@@ -45,13 +47,8 @@ def login(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-
-            user = auth.authenticate(request, username=username, password=password)
-            auth.login(request, user)
-
-            return redirect(reverse("core:calendar"))
+            authenticated_user = form.cleaned_data["authenticated_user"]
+            return _login_and_go_to_default_board(request, authenticated_user)
 
         return render(request, "core/authentication/login.html", {"form": form})
 
@@ -61,4 +58,10 @@ def login(request):
 @login_required
 def logout(request):
     auth.logout(request)
-    return redirect(reverse("core:index"))
+    return redirect("core:index")
+
+
+def _login_and_go_to_default_board(request, user):
+    auth.login(request, user)
+    user_settings, _ = UserSettings.objects.get_or_create(user=user)
+    return redirect(user_settings.get_default_board_url())

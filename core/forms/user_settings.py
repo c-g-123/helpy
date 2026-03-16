@@ -9,7 +9,7 @@ class UserSettingsForm(forms.ModelForm):
         model = UserSettings
         fields = [
             "theme",
-            "default_page",
+            "default_board",
         ]
 
 

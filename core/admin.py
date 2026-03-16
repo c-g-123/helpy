@@ -23,4 +23,4 @@ class ResourceAdmin(admin.ModelAdmin):
 
 @admin.register(UserSettings)
 class UserSettingsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'theme', 'default_page')
+    list_display = ('user', 'theme', 'default_board')
