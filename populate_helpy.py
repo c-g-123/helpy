@@ -16,8 +16,11 @@ def create_users(n=5):
     for i in range(1, n + 1):
         user, created = User.objects.get_or_create(
             username=f"user{i}",
-            defaults={"email": f"user{i}@example.com", "password": "pass1234"}
+            defaults={"email": f"user{i}@example.com"}
         )
+        if created:
+            user.set_password("pass1234")
+            user.save()
         users.append(user)
     return users
 

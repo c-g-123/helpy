@@ -7,7 +7,7 @@ from core.models import Task
 @login_required
 def agenda(request):
     # WARNING Does this actually order by date or does it order alphabetically by the date column?
-    tasks = Task.objects.filter(project_id__user_id=request.user).order_by('due_datetime') # The double '__' is for project_id -> user_id -> request.user relationship.
+    tasks = Task.objects.filter(project_id__user_id=request.user, parent_task__isnull=True).order_by('due_datetime') # The double '__' is for project_id -> user_id -> request.user relationship.
 
     days_with_tasks = {}
 

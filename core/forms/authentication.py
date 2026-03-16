@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 
 class RegisterForm(forms.Form):
@@ -10,9 +11,12 @@ class RegisterForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
+        username = cleaned_data["username"]
         password = cleaned_data["password"]
         repeat_password = cleaned_data["repeat_password"]
 
+        if username and User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Username already exists.")
         if password and repeat_password and password != repeat_password:
             raise forms.ValidationError("Passwords do not match.")
 
@@ -37,6 +41,6 @@ class LoginForm(forms.Form):
             if not user.is_active:
                 raise forms.ValidationError("Your account is disabled.")
 
-            cleaned_data["authenticated_user"] = user
+            cleaned_data['authenticated_user'] = user
 
         return cleaned_data

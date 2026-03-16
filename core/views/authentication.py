@@ -37,7 +37,7 @@ def register(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect(reverse("core:calendar"))
+        return _login_and_go_to_default_board(request, request.user)
 
     if request.method == "GET":
         form = LoginForm()
