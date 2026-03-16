@@ -57,7 +57,11 @@ class ProjectForm(forms.ModelForm):
 
 
 class TaskForm(forms.ModelForm):
-
+    STATUS_CHOICES=[
+        ('TODO', 'ToDo'),
+        ('IP', 'In Progress'),
+        ('DONE', 'Done')
+    ]
     name = forms.CharField(
         widget=forms.TextInput(attrs={
             "placeholder": "Name"
@@ -79,6 +83,11 @@ class TaskForm(forms.ModelForm):
     due_datetime = forms.DateTimeField(
         required=False,
         widget=forms.DateTimeInput(attrs={"type": "datetime-local"})
+    )
+
+    status = forms.ChoiceField(
+        choices= STATUS_CHOICES,
+        required = False
     )
 
     class Meta:

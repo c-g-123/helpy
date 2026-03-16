@@ -45,7 +45,7 @@ class Project(models.Model):
 class Task(models.Model):
 
     #should this be an enum?
-    class Status(models.Choices):
+    class Status(models.TextChoices):
         TODO = "ToDo"
         DONE = "Done"
         IN_PROGRESS = "In Progress"
@@ -76,7 +76,7 @@ class Task(models.Model):
     )
 
     status = models.CharField(
-        choices = Status,
+        choices = Status.choices,
         null = True
     )
 
