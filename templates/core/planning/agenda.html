@@ -9,9 +9,9 @@
             <a href="{% url 'core:create_task' %}" class="btn-save" style="text-decoration: none;">+ Add task</a>
         </div>
 
-        {% if days_with_tasks %}
+        {% if day_task_data %}
             <ul class="agenda-list">
-                {% for day, day_data in days_with_tasks %}
+                {% for day, day_data in day_task_data %}
                     <li>
                         <div class="agenda-day-header">{{ day }}</div>
                         

@@ -9,19 +9,17 @@ def agenda(request):
     # WARNING Does this actually order by date or does it order alphabetically by the date column?
     tasks = Task.objects.filter(project_id__user_id=request.user, parent_task__isnull=True).order_by('due_datetime') # The double '__' is for project_id -> user_id -> request.user relationship.
 
-    days_with_tasks = {}
+    day_task_data = {}
 
     for task in tasks:
         if task.due_datetime:
             due_date = task.due_datetime.date().strftime('%A, %d %B %Y')
-            if due_date not in days_with_tasks:
-                days_with_tasks[due_date] = {
+            if due_date not in day_task_data:
+                day_task_data[due_date] = {
                     'due_datetime': task.due_datetime.date(),
                     'tasks': [task],
                 }
                 continue
-            days_with_tasks[due_date]['tasks'].append(task)
+            day_task_data[due_date]['tasks'].append(task)
 
-    print(days_with_tasks)
-
-    return render(request, 'core/planning/agenda.html', {'days_with_tasks': days_with_tasks.items()})
+    return render(request, 'core/planning/agenda.html', {'day_task_data': day_task_data.items()})
