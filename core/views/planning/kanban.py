@@ -6,9 +6,9 @@ from core.models import Task
 @login_required
 def kanban(request):
 
-    tasks_todo = Task.objects.filter(status=Task.Status.TODO)
-    tasks_in_progress = Task.objects.filter(status=Task.Status.IN_PROGRESS)
-    tasks_done= Task.objects.filter(status=Task.Status.DONE)
+    tasks_todo = Task.objects.filter(status=Task.Status.TODO, project_id__user_id=request.user)
+    tasks_in_progress = Task.objects.filter(status=Task.Status.IN_PROGRESS, project_id__user_id=request.user)
+    tasks_done= Task.objects.filter(status=Task.Status.DONE, project_id__user_id=request.user)
 
     context = {
         'tasks_todo': tasks_todo,

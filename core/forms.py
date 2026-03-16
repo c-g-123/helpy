@@ -57,11 +57,7 @@ class ProjectForm(forms.ModelForm):
 
 
 class TaskForm(forms.ModelForm):
-    STATUS_CHOICES=[
-        ('TODO', 'ToDo'),
-        ('IP', 'In Progress'),
-        ('DONE', 'Done')
-    ]
+    STATUS_CHOICES=Task.Status.choices
     name = forms.CharField(
         widget=forms.TextInput(attrs={
             "placeholder": "Name"
@@ -99,6 +95,7 @@ class TaskForm(forms.ModelForm):
             "description",
             "set_datetime",
             "due_datetime",
+            "status"
         ]
 
     def __init__(self, *args, **kwargs):
