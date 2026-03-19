@@ -9,10 +9,10 @@ class ProjectModelTests(TestCase):
         self.project = Project.objects.create(user=self.user, name='Test_Project')
 
     def test_project_name(self):
-        self.assertEqual(self.project.name, 'Alpha Project')
+        self.assertEqual(self.project.name, 'Test_Project')
 
     def test_user_creation(self):
         self.assertEqual(self.project.user, self.user)
 
     def test_project_name_is_str(self):
-        self.assertEqual(str(self.project), 'Alpha Project')
+        self.assertEqual(str(self.project), 'Test_Project')
