@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from core.models import Project, Task, Tag
 
+from django.core.exceptions import ValidationError
+
 class TagModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='test_user', email='test@email.com', password='test_password')
@@ -14,6 +16,12 @@ class TagModelTests(TestCase):
 
     def test_tag_creation(self):
         self.assertEqual(self.tag.name, 'test_tag')
+
+    def test_tag_name_length(self):
+        test_name = 'a' * (Tag.MAX_NAME_LENGTH + 1)
+        tag = Tag(name=test_name)
+        with self.assertRaises(ValidationError):
+            tag.full_clean()
   
     def test_tag_user_many_to_many_relationship(self):
         self.assertIn(self.user, self.tag.user_tags.all())
