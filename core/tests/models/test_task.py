@@ -48,7 +48,7 @@ class TaskModelTests(TestCase):
         with self.assertRaises(ValidationError):
             task.full_clean()
 
-    def test_task_status_max_length(self):                    #Why do we need MAX_STATUS_LENGTH if we have options to chooe from?
+    def test_task_status_max_length(self):
         test_status = 'a' * (Task.MAX_STATUS_LENGTH + 1)
         task = Task(project=self.project, name='Valid Name', status=test_status)
 
@@ -70,3 +70,23 @@ class TaskModelTests(TestCase):
         self.parent_task.delete()
         
         self.assertEqual(Task.objects.count(), 0)
+
+    def test_get_breadcrumbs(self):
+        parent_breadcrumbs = self.parent_task.get_breadcrumbs()
+        self.assertEqual(parent_breadcrumbs, [self.parent_task])
+
+        child_breadcrumbs = self.child_task.get_breadcrumbs()
+        self.assertEqual(child_breadcrumbs, [self.parent_task, self.child_task])
+
+        grandchild_task = Task.objects.create(
+            project=self.project,
+            name='Grandchild_task',
+            parent_task=self.child_task,
+            status=Task.Status.TODO
+        )
+        
+        grandchild_breadcrumbs = grandchild_task.get_breadcrumbs()
+        self.assertEqual(
+            grandchild_breadcrumbs, 
+            [self.parent_task, self.child_task, grandchild_task]
+        )
