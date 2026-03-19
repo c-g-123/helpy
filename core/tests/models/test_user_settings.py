@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from core.models import UserSettings
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
+from django.urls import reverse
 
 class UserSettingsModelTests(TestCase):
     def setUp(self):
@@ -30,3 +31,13 @@ class UserSettingsModelTests(TestCase):
     def test_user_settings_only_one_settings_profile_per_user(self):
         with self.assertRaises(IntegrityError):
             UserSettings.objects.create(user=self.user, theme=UserSettings.Theme.DARK)
+
+    def test_get_default_board_url(self):
+            expected_kanban_url = reverse('core:kanban')
+            self.assertEqual(self.user_settings.get_default_board_url(), expected_kanban_url)
+
+            self.user_settings.default_board = UserSettings.DefaultBoard.AGENDA
+            self.user_settings.save()
+            
+            expected_agenda_url = reverse('core:agenda')
+            self.assertEqual(self.user_settings.get_default_board_url(), expected_agenda_url)
