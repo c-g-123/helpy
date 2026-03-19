@@ -36,11 +36,45 @@
 
     <form method="post" action="{% url 'core:add_resource' task.id %}" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            {{ resource_form.as_p }}
-        </div>
+
+        <p>
+            {{ resource_form.name.label_tag }}
+            {{ resource_form.name }}
+            {{ resource_form.name.errors }}
+        </p>
+
+        <p>
+            {{ resource_form.file.label_tag }}
+            {{ resource_form.file }}
+            <button type="button" id="clear-file-btn" style="margin-left: 8px; font-size: 0.85em; padding: 2px 6px;">
+                ✕
+            </button>
+            {{ resource_form.file.errors }}
+        </p>
+
+        <p>
+            {{ resource_form.link.label_tag }}
+            {{ resource_form.link }}
+            {{ resource_form.link.errors }}
+        </p>
+
+        {{ resource_form.non_field_errors }}
+
         <button type="submit" class="btn-primary">Add Resource</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const clearFileButton = document.getElementById('clear-file-btn');
+            const fileInput = document.getElementById('id_file');
+
+            if (clearFileButton && fileInput) {
+                clearFileButton.addEventListener('click', function () {
+                    fileInput.value = '';
+                });
+            }
+        });
+    </script>
 
     {% if resources %}
         <ul>
