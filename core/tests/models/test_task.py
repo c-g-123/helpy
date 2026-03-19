@@ -54,3 +54,8 @@ class TaskModelTests(TestCase):
 
         with self.assertRaises(ValidationError):
             task.full_clean()
+
+    def test_task_status_that_is_not_an_option(self):
+        task = Task(project=self.project, name='Test', status='INVALID')
+        with self.assertRaises(ValidationError):
+            task.full_clean()
