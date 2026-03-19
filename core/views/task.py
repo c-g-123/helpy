@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from core.forms import TaskForm, ResourceForm
-from core.models import Task, Project
+from core.models import Task, Project, Resource
 
 
 @login_required
@@ -85,6 +85,22 @@ def add_resource(request, task_id):
     }
 
     return render(request, 'core/task/task.html', context)
+
+@login_required
+def delete_resource(request, resource_id):
+    resource = get_object_or_404(
+        Resource,
+        id=resource_id,
+        task__project__user=request.user
+    )
+
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    task_id = resource.task.id
+    resource.delete()
+
+    return redirect(reverse('core:task', args=[task_id]))
 
 @login_required
 def view_task(request, task_id):

@@ -53,6 +53,11 @@
                     {% elif resource.link %}
                         - <a href="{{ resource.link }}" target="_blank">Open link</a>
                     {% endif %}
+
+                    <form method="post" action="{% url 'core:delete_resource' resource.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
