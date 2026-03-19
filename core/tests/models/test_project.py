@@ -15,3 +15,7 @@ class ProjectModelTests(TestCase):
 
     def test_project_name_is_str(self):
         self.assertEqual(str(self.project), 'Test_Project')
+
+    def test_project_delete_user_cascades_projects(self):
+        self.user.delete()
+        self.assertEqual(Project.objects.count(), 0)
