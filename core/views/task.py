@@ -113,7 +113,7 @@ def view_task(request, task_id):
 
         if form.is_valid():
             task = form.save()
-            return redirect(reverse('core:agenda'))
+            return redirect(reverse('core:task', args=[task.id]))
     else:
         return HttpResponseNotAllowed(['GET', 'POST']) 
 

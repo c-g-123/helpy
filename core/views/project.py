@@ -35,8 +35,8 @@ def view_project(request, project_id):
         form = ProjectForm(request.POST, instance=project)
 
         if form.is_valid():
-            project.save()
-            return redirect(reverse('core:projects'))
+            project = form.save()
+            return redirect(reverse('core:project', args=[project.id]))
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
