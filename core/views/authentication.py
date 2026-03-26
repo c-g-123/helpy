@@ -26,9 +26,9 @@ def register(request):
                 password=password
             )
 
-            UserSettings.objects.get_or_create(user=user)
-
-            return _login_and_go_to_default_board(request, user)
+            user_settings = UserSettings.objects.create(user=user)
+            auth.login(request, user)
+            return redirect(user_settings.get_default_board_url())
 
         return render(request, "core/authentication/register.html", {"form": form})
 
@@ -55,13 +55,12 @@ def login(request):
     return HttpResponseNotAllowed(["GET", "POST"])
 
 
-@login_required
 def logout(request):
     auth.logout(request)
     return redirect("core:index")
 
 
 def _login_and_go_to_default_board(request, user):
+    user_settings = UserSettings.objects.get(user=user)
     auth.login(request, user)
-    user_settings, _ = UserSettings.objects.get_or_create(user=user)
     return redirect(user_settings.get_default_board_url())

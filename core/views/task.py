@@ -117,7 +117,7 @@ def view_task(request, task_id):
     else:
         return HttpResponseNotAllowed(['GET', 'POST']) 
 
-    subtasks = Task.objects.filter(parent_task=task, project__user=request.user)
+    subtasks = Task.objects.subtasks_of(task)
     breadcrumbs = task.get_breadcrumbs()
 
     resources = task.resources.all().order_by('-added_date')

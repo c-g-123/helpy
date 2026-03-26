@@ -8,7 +8,7 @@ import random
 from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
-from core.models import Project, Task, Tag, Resource
+from core.models import Project, Task, Resource
 
 
 def create_users(n=5):
@@ -69,15 +69,6 @@ def create_tasks(projects, max_depth=2, tasks_per_project=5):
     return all_tasks
 
 
-def create_tags(users, n=5):
-    tags = []
-    for i in range(1, n + 1):
-        tag, created = Tag.objects.get_or_create(name=f"Tag {i}")
-        tag.user_tags.set(random.sample(users, k=random.randint(1, len(users))))
-        tags.append(tag)
-    return tags
-
-
 def create_resources(tasks, n=3):
     resources = []
     for task in tasks:
@@ -95,12 +86,10 @@ if __name__ == "__main__":
     users = create_users()
     projects = create_projects(users)
     tasks = create_tasks(projects)
-    tags = create_tags(users)
     resources = create_resources(tasks)
 
     print("Populated database with:")
     print(f"- {len(users)} users")
     print(f"- {len(projects)} projects")
     print(f"- {len(tasks)} tasks")
-    print(f"- {len(tags)} tags")
     print(f"- {len(resources)} resources")

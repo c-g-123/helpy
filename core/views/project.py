@@ -27,7 +27,7 @@ def create_project(request):
 
 @login_required
 def view_project(request, project_id):
-    project = get_object_or_404(Project, id=project_id, user=request.user)
+    project = Project.objects.for_user_or_404(project_id, request.user)
 
     if request.method == 'GET':
         form = ProjectForm(instance=project)
@@ -40,7 +40,7 @@ def view_project(request, project_id):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    tasks = Task.objects.filter(project=project, parent_task__isnull=True)
+    tasks = Task.objects.active_top_level_from_project(project)
 
     context = {
         'project': project,
@@ -56,5 +56,5 @@ def view_projects(request):
     if request.method != 'GET':
         return HttpResponseNotAllowed(['GET'])
 
-    projects = Project.objects.filter(user=request.user)
+    projects = Project.objects.with_user(request.user)
     return render(request, 'core/project/projects.html', {'projects': projects})

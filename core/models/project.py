@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from core.query_sets.project import ProjectQuerySet
+
 
 class Project(models.Model):
 
@@ -8,6 +10,7 @@ class Project(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=MAX_NAME_LENGTH)
+    objects = ProjectQuerySet.as_manager()
 
     def __str__(self):
         return self.name

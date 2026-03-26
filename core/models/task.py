@@ -1,6 +1,7 @@
 from django.db import models
 
 from .project import Project
+from core.query_sets.task import TaskQuerySet
 
 
 class Task(models.Model):
@@ -10,8 +11,8 @@ class Task(models.Model):
     MAX_STATUS_LENGTH = 11
 
     class Status(models.TextChoices):
-        TODO = 'TODO', 'To-do'
-        IN_PROGRESS = "IN_PROGRESS", "In progress"
+        TO_DO = 'TO_DO', 'To-do'
+        IN_PROGRESS = "IN_PROGRESS", "In-progress"
         DONE = 'DONE', 'Done'
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -32,8 +33,9 @@ class Task(models.Model):
     status = models.CharField(
         max_length=MAX_STATUS_LENGTH,
         choices=Status.choices,
-        default=Status.TODO,
+        default=Status.TO_DO,
     )
+    objects = TaskQuerySet.as_manager()
 
     def get_breadcrumbs(self):
         breadcrumbs = []

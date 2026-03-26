@@ -1,6 +1,12 @@
 {% extends 'core/base.html' %}
-{% block title %}Register{% endblock %}
-{% block navigation_bar %}{% endblock %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block navigation_bar %}
+    {% include 'core/components/navigation-bars/splash.html' %}
+{% endblock %}
 
 {% block body %}
     <div class="form-container">
@@ -23,7 +29,7 @@
             <button type="submit" class="btn-primary">Create Account</button>
         </form>
         <p style="text-align: center; margin-top: 20px; color: var(--text-muted);">
-            Already have an account? <a href="{% url 'core:login' %}" style="color: var(--primary); font-weight: bold; text-decoration: none;">Log in</a>
+            Already have an account? <a href="{% url 'core:login' %}" style="color: var(--primary); font-weight: bold; text-decoration: none;">Log in</a>.
         </p>
     </div>
 {% endblock %}

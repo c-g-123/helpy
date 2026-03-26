@@ -8,16 +8,7 @@
 </head>
 <body>
     {% block navigation_bar %}
-        <div id="nav_bar">
-            <a class="left" href="{% url 'core:agenda' %}">Agenda</a>
-            <a class="left" href="{% url 'core:calendar' %}">Calendar</a>
-            <a class="left" href="{% url 'core:kanban' %}">Kanban</a>
-            <a class="left" href="{% url 'core:projects' %}">Projects</a>
-            <div class="nav-buttons" style="margin-left: auto; display: flex; gap: 15px;">
-                <a class="right" href="{% url 'core:settings' %}">Settings</a>
-                <a class="right" href="{% url 'core:logout' %}" style="background-color: #555;">Logout</a>
-            </div>
-        </div>
+        {% include 'core/components/navigation-bars/app.html' %}
     {% endblock %}
 
     <div class="main-content">

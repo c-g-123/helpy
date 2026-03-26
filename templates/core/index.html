@@ -4,17 +4,10 @@
 {% block title %}Welcome to Helpy{% endblock %}
 
 {% block navigation_bar %}
+    {% include 'core/components/navigation-bars/splash.html' %}
 {% endblock %}
 
 {% block body %}
-    <div id="welcome_nav_bar">
-        <img src="{% static 'core/images/testcat.jpeg' %}" alt="Helpy Logo" height="50">
-        <div class="nav-buttons">
-            <a href="{% url 'core:login' %}">Login</a>
-            <a href="{% url 'core:register' %}">Register</a>
-        </div>
-    </div>
-
     <div id="welcome">
         <h1 style="text-align: center;">Welcome to Helpy</h1>
         <p style="text-align: center;">Helpy is a personal productivity tool that helps you manage your tasks, projects, and schedule in one place.</p>

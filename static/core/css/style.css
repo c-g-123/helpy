@@ -1,33 +1,49 @@
 :root {
-    --bg-color: #fdfbf7;        
-    --container-bg: #ffffff;    
-    --primary: #8b5a2b;         
-    --primary-hover: #6e4520;   
-    --text-main: #3e2723;       
-    --text-muted: #795548;      
-    --border-color: #d7ccc8;    
+    --bg: #ffffff;
+    --text: #000000;
+    --primary: #fdbe02;
+    --primary-hover: #f0b000;
+    --primary-surrounded-text: #000000;
     --danger: #d32f2f;          
     --danger-hover: #b71c1c;
+    --danger-surrounded-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg: #111111;
+    --text: #ffffff;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; 
     margin: 0;
-    padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
 }
 
-/* --- Navigation Bars --- */
-#nav_bar, #welcome_nav_bar {
-    background-color: var(--container-bg);
-    box-shadow: 0 2px 10px rgba(139, 90, 43, 0.08);
+.splash-navigation-bar {
+    background-color: var(--primary);
     display: flex;
     align-items: center;
-    padding: 15px 40px;
-    gap: 15px;
-    margin: 0;
+    gap: 16px;
 }
+
+.splash-navigation-bar a {
+    padding: 16px;
+    color: var(--primary-surrounded-text);
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.splash-navigation-bar a:hover {
+    background-color: var(--primary-hover);
+}
+
+.flex-right {
+    margin-left: auto;
+}
+
+
 
 #welcome_nav_bar {
     position: absolute;
