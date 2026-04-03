@@ -1,11 +1,13 @@
 {% extends 'core/base.html' %}
 {% load static %}
+
 {% block title %}
     Agenda
 {% endblock %}
+
 {% block body %}
-    <div class="left-holes"></div>
     <h1>Agenda</h1>
+    <a href="{% url 'core:create_task' %}">Create task</a>
     {% if dates %}
         {% for formatted_date, date_data in dates %}
             <div class="agenda-date">
@@ -16,9 +18,7 @@
                     </div>
                 {% endfor %}
                 <div class="card card--agenda">
-                    <a href="{% url 'core:create_task' %}?{{ date_data.create_task_query }}">
-                        Create task +
-                    </a>
+                    <a href="{% url 'core:create_task' %}?{{ date_data.create_task_query }}">Create task</a>
                 </div>
             </div>
         {% endfor %}

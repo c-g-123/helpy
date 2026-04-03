@@ -3,14 +3,10 @@
 {% block title %}Create project{% endblock %}
 
 {% block body %}
-    <div class="form-container" style="margin-top: 40px;">
-        <h1>Create Project</h1>
-        <form method="post">
-            {% csrf_token %}
-            
-            {{ form.as_p }}
-            
-            <button type="submit" class="btn-primary">Create Project</button>
-        </form>
-    </div>
+    <h1>Create Project</h1>
+    <form method="post" action="{% url 'core:create_project_submit' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
 {% endblock %}

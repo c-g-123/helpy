@@ -1,36 +1,31 @@
 {% extends 'core/base.html' %}
-{% block title %}{{ project.name }}{% endblock %}
+{% block title %}
+    {{ project.name }}
+{% endblock %}
 
 {% block body %}
-<div class="dashboard-container">
-    <div class="dashboard-header">
-        <h1>{{ project.name }}</h1>
-    </div>
+    <h1>{{ project.name }}</h1>
 
-    <div class="settings-container" style="margin: 0 0 40px 0; max-width: 100%; padding: 30px;">
-        <h2 style="margin-top: 0; border-bottom: none; color: var(--text-muted); font-size: 16px;">EDIT PROJECT DETAILS</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.as_p }}
-            </div>
-            <button type="submit" class="btn-save">Save Changes</button>
-        </form>
-    </div>
+    <form method="post" action="{% url 'core:edit_project' project_id=project.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
 
-    <div class="dashboard-header" style="margin-top: 40px;">
-        <h2>Tasks</h2>
-        <a href="{% url 'core:create_task' %}?project={{ project.id }}" class="btn-save" style="text-decoration: none;">+ Add Task</a>
-    </div>
+    <a href="{% url 'core:create_task' %}?project_id={{ project.id }}">Create task</a>
 
-    <ul class="task-grid">
+    <ul>
         {% for task in tasks %}
             <li>
-                {% include 'core/task/../components/cards/task-card.html' with task=task %}
+                {% include 'core/components/cards/task.html' with task=task %}
             </li>
         {% empty %}
-            <p style="color: var(--text-muted);">This project has no tasks.</p>
+            <p>This project has no tasks.</p>
         {% endfor %}
     </ul>
-</div>
+
+    <form method="post" action="{% url 'core:delete_project' project.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
 {% endblock %}

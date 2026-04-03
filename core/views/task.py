@@ -1,16 +1,77 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.views.decorators.http import require_GET, require_POST
 
-from core.forms import TaskForm, ResourceForm
-from core.models import Task, Project, Resource
+from core.forms import TaskForm
+from core.models import Task, Project
 
 
 @login_required
+@require_GET
 def create_task(request):
+    initial_task = _get_initial_task_from_query_parameters(request)
+    return render(request, 'core/pages/create-task.html', {'form': TaskForm(user=request.user, initial=initial_task)})
+
+
+@login_required
+@require_POST
+def create_task_submit(request):
+    form = TaskForm(request.POST, user=request.user)
+
+    if form.is_valid():
+        task = form.save()
+        return redirect('core:task', task.id)
+
+    return render(request, 'core/pages/create-task.html', {'form': form})
+
+
+@login_required
+@require_GET
+def task(request, task_id):
+    task = get_object_or_404(Task.objects.for_user(request.user), id=task_id)
+
+    context = {
+        'task': task,
+        'breadcrumbs': task.get_breadcrumbs(),
+        'form': TaskForm(user=request.user, instance=task),
+        'subtasks': Task.objects.for_parent(task, request.user)
+    }
+
+    return render(request, 'core/pages/task.html',context)
+
+
+@login_required
+@require_POST
+def edit_task(request, task_id):
+    task = get_object_or_404(Task.objects.for_user(request.user), id=task_id)
+
+    form = TaskForm(request.POST, user=request.user, instance=task)
+
+    if form.is_valid():
+        form.save()
+        return redirect('core:task', task.id)
+
+    context = {
+        'task': task,
+        'breadcrumbs': task.get_breadcrumbs(),
+        'form': form,
+        'subtasks': Task.objects.for_parent(task, request.user)
+    }
+
+    return render(request, 'core/pages/task.html', context)
+
+
+@login_required
+@require_POST
+def delete_task(request, task_id):
+    task = get_object_or_404(Task.objects.for_user(request.user), id=task_id)
+    task.delete()
+    return redirect('core:project', task.project.id)
+
+
+def _get_initial_task_from_query_parameters(request):
     project_id = request.GET.get('project_id')
     parent_task_id = request.GET.get('parent_task_id')
     raw_due_datetime = request.GET.get('due_datetime')
@@ -19,8 +80,8 @@ def create_task(request):
 
     if project_id:
         project = get_object_or_404(
-            Project, 
-            id=project_id, 
+            Project,
+            id=project_id,
             user=request.user
         )
         initial_task['project'] = project
@@ -35,59 +96,4 @@ def create_task(request):
         due_datetime = datetime.fromisoformat(raw_due_datetime)
         initial_task['due_datetime'] = due_datetime
 
-    if request.method == 'GET':
-        form = TaskForm(user=request.user, initial=initial_task)
-    elif request.method == 'POST':
-        post_data = request.POST.copy()
-
-        if parent_task_id:
-            parent_task = get_object_or_404(
-                Task,
-                id=parent_task_id,
-                project__user=request.user
-            )
-            post_data['parent_task'] = str(parent_task.id)
-            post_data['project'] = str(parent_task.project.id)
-
-        form = TaskForm(post_data, user=request.user)
-
-        if form.is_valid():
-            task = form.save()
-            return redirect(reverse('core:task', args=[task.id]))
-    else:
-        return HttpResponseNotAllowed(['GET', 'POST'])
-
-    return render(request, 'core/pages/create-task.html', {'form': form})
-
-
-@login_required
-def view_task(request, task_id):
-    task = get_object_or_404(Task, id=task_id, project__user=request.user)
-
-    if request.method == 'GET':
-        form = TaskForm(instance=task, user=request.user)
-    elif request.method == 'POST':
-        form = TaskForm(request.POST, instance=task, user=request.user)
-
-        if form.is_valid():
-            task = form.save()
-            return redirect(reverse('core:task', args=[task.id]))
-    else:
-        return HttpResponseNotAllowed(['GET', 'POST']) 
-
-    subtasks = Task.objects.for_parent(task, request.user)
-    breadcrumbs = task.get_breadcrumbs()
-
-    resources = task.resources.all().order_by('-added_date')
-    resource_form = ResourceForm()
-
-    context = {
-        'task': task,
-        'form': form,
-        'subtasks': subtasks,
-        'breadcrumbs': breadcrumbs,
-        'resources': resources,
-        'resource_form': resource_form,
-    }
-
-    return render(request, 'core/pages/task.html', context)
+    return initial_task

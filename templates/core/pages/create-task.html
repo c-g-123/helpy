@@ -3,14 +3,10 @@
 {% block title %}Create task{% endblock %}
 
 {% block body %}
-    <div class="form-container" style="margin-top: 40px;">
-        <h1>Create Task</h1>
-        <form method="post">
-            {% csrf_token %}
-            
-            {{ form.as_p }}
-            
-            <button type="submit" class="btn-primary">Create Task</button>
-        </form>
-    </div>
+    <h1>Create Task</h1>
+    <form method="post" action="{% url 'core:create_task_submit' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
 {% endblock %}

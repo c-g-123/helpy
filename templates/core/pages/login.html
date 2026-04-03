@@ -6,17 +6,15 @@
     {% include 'core/components/navigation-bars/splash.html' %}
 {% endblock %}
 {% block body %}
-    <div>
-        <h1>Login</h1>
-        <form method="post" action="{% url 'core:login_submit' %}">
-            {% csrf_token %}
-            {{ form.username.label_tag }}<br/>
-            {{ form.username }}<br/>
-            {{ form.password.label_tag }}<br/>
-            {{ form.password }}<br/>
-            {{ form.non_field_errors }}<br/>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a class="link" href="{% url 'core:register' %}">Register here</a>.</p>
-    </div>
+    <h1>Login</h1>
+    <form method="post" action="{% url 'core:login_submit' %}">
+        {% csrf_token %}
+        {{ form.username.label_tag }}<br/>
+        {{ form.username }}<br/>
+        {{ form.password.label_tag }}<br/>
+        {{ form.password }}<br/>
+        {{ form.non_field_errors }}<br/>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'core:register' %}">Register here</a>.</p>
 {% endblock %}

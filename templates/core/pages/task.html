@@ -15,12 +15,10 @@
             {% endif %}
         {% endfor %}
     </nav>
-    <form method="post">
+    <form method="post" action="{% url 'core:edit_task' task.id %}">
         {% csrf_token %}
-        <div class="form-group">
-            {{ form.as_p }}
-        </div>
-        <button type="submit" class="btn-primary">Save Changes</button>
+        {{ form.as_p }}
+        <button type="submit">Save</button>
     </form>
     {% if subtasks %}
         {% for subtask in subtasks %}
@@ -30,6 +28,11 @@
         <p>No subtasks yet.</p>
     {% endif %}
     <p>
-        <a href="{% url 'core:create_task' %}?parent_task={{ task.id }}">Add subtask</a>
+        <a href="{% url 'core:create_task' %}?project_id={{ task.project.id }}&parent_task_id={{ task.id }}">Add subtask</a>
     </p>
+
+    <form method="post" action="{% url 'core:delete_task' task.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
 {% endblock %}

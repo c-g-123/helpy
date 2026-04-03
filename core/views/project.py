@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 
 from core.forms import ProjectForm
-from core.models import Project
+from core.models import Project, Task
 
 
 @login_required
@@ -30,12 +30,16 @@ def create_project_submit(request):
 @require_GET
 def project(request, project_id):
     project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
-    return render(request, 'core/pages/project.html', {'form': ProjectForm(instance=project)})
+    return render(request, 'core/pages/project.html', {
+        'project': project,
+        'form': ProjectForm(instance=project),
+        'tasks': Task.objects.top_level(request.user).for_project(project, request.user)
+    })
 
 
 @login_required
 @require_POST
-def project_submit(request, project_id):
+def edit_project(request, project_id):
     project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
 
     form = ProjectForm(request.POST, instance=project)
@@ -45,6 +49,14 @@ def project_submit(request, project_id):
         return redirect('core:project', project.id)
 
     return render(request, 'core/pages/project.html', {'form': form})
+
+
+@login_required
+@require_POST
+def delete_project(request, project_id):
+    project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
+    project.delete()
+    return redirect('core:projects')
 
 
 @login_required
