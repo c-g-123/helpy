@@ -10,6 +10,8 @@
     --danger: #d32f2f;          
     --danger-hover: #b71c1c;
     --danger-surrounded-text: #ffffff;
+    --dropdown: #f0f0f0;
+    --dropdown-hover: #e0e0e0;
 
     --header-height: 70px;
 }
@@ -29,63 +31,28 @@ body {
     font-family: sans-serif;
 }
 
-.navigation-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;  /* Keep this above other elements. */
-    width: 100%;
-    height: var(--header-height);
-    background-color: var(--primary);
-    display: flex;
-    align-items: center;
-    gap: 40px;
+.dropdown-trigger {
 }
 
-.navigation-bar a {
-    padding: 16px;
-    color: var(--primary-surrounded-text);
-    text-decoration: none;
-    font-size: 16px;
+.dropdown-trigger:hover .dropdown {
+  display: block;
 }
 
-.navigation-bar a:hover {
-    background-color: var(--primary-hover);
+.dropdown {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    background-color: var(--dropdown);
 }
 
-.flex-right {
-    margin-left: auto;
-}
-
-.agenda-date {
-    padding: 15px;
-    border-bottom: 1px solid var(--border);
-}
-
-.card {
-    margin: 15px;
-    transition: 0.2s;
-}
-
-.card:hover {
-    background-color: var(--background-hover);
-}
-
-.card a {
-    padding: 15px;
+.dropdown-item {
+    padding: 10px;
     display: block;
+    color: black;
     text-decoration: none;
 }
 
-.card a:visited {
-    color: var(--text);
+.dropdown-item:hover {
+  background: var(--dropdown-hover);
 }
 
-.card--agenda {
-
-}
-
-.card--agenda:hover {
-    transform: translateX(2px);
-
-}

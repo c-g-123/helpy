@@ -32,7 +32,7 @@ def register_submit(request):
 @require_GET
 def login(request):
     if request.user.is_authenticated:
-        return redirect(request.user.usersettings.get_default_board_url())
+        return redirect(request.user.user_settings.get_default_board_url())
 
     return render(request, "core/pages/login.html", {"form": LoginForm()})
 
@@ -42,7 +42,7 @@ def login_submit(request):
     form = LoginForm(request.POST)
     if form.is_valid():
         auth.login(request, form.cleaned_data['authenticated_user'])
-        return redirect(form.cleaned_data['authenticated_user'].usersettings.get_default_board_url())
+        return redirect(form.cleaned_data['authenticated_user'].user_settings.get_default_board_url())
 
     return render(request, "core/pages/login.html", {"form": form})
 
