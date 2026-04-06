@@ -11,16 +11,29 @@ class Task(models.Model):
     MAX_STATUS_LENGTH = 11
 
     class Status(models.TextChoices):
+
         TO_DO = 'TO_DO', 'To-do'
         IN_PROGRESS = "IN_PROGRESS", "In-progress"
         DONE = 'DONE', 'Done'
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='tasks',
+    )
     parent_task = models.ForeignKey(
         'self',
         on_delete=models.CASCADE,
-        null=True,  # Allow top level tasks to have no parent.
+        null=True,
         blank=True,
+        related_name='child_tasks',
+    )
+    recurrence_source = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='instances'
     )
     name = models.CharField(max_length=MAX_NAME_LENGTH)
     description = models.CharField(
@@ -28,7 +41,6 @@ class Task(models.Model):
         null=True,
         blank=True,
     )
-    set_datetime = models.DateTimeField(null=True, blank=True)
     due_datetime = models.DateTimeField(null=True, blank=True)
     status = models.CharField(
         max_length=MAX_STATUS_LENGTH,

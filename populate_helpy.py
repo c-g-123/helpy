@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 from django.core.management import call_command
 from django.contrib.auth.models import User
-from core.models import Project, Task, Resource, UserSettings
+from core.models import Project, Task, UserSettings
 
 
 def create_users(n=5):
@@ -107,33 +107,14 @@ def create_tasks(projects, max_depth=2, tasks_per_project=5):
     return all_tasks
 
 
-def create_resources(tasks, n=3):
-    resources = []
-    now = datetime.now()
-
-    for task in tasks:
-        for i in range(n):
-            resources.append(Resource(
-                task=task,
-                name=f"{task.name} Resource {i + 1}",
-                added_date=now
-            ))
-
-    Resource.objects.bulk_create(resources)
-
-    return resources
-
-
 if __name__ == "__main__":
     call_command("flush", verbosity=0, interactive=False)
 
     users = create_users()
     projects = create_projects(users)
     tasks = create_tasks(projects)
-    resources = create_resources(tasks)
 
     print("Populated database with:")
     print(f"- {len(users)} users")
     print(f"- {len(projects)} projects")
     print(f"- {len(tasks)} tasks")
-    print(f"- {len(resources)} resources")

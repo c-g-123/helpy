@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 
 from core.forms import ProjectForm
-from core.models import Project, Task
 
 from .utility import get_link_chain
 
@@ -32,13 +31,11 @@ def create_project_submit(request):
 @login_required
 @require_GET
 def project(request, project_id):
-    project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
+    project = get_object_or_404(request.user.projects, id=project_id)
     context = {
         'project': project,
         'link_chain': get_link_chain(project),
         'form': ProjectForm(user=request.user, instance=project),
-        'subprojects': Project.objects.for_parent(project, request.user),
-        'tasks': Task.objects.top_level(request.user).for_project(project, request.user)
     }
     return render(request, 'core/pages/project.html', context)
 
@@ -46,7 +43,7 @@ def project(request, project_id):
 @login_required
 @require_POST
 def edit_project(request, project_id):
-    project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
+    project = get_object_or_404(request.user.projects, id=project_id)
 
     form = ProjectForm(user=request.user, instance=project, data=request.POST)
 
@@ -60,7 +57,7 @@ def edit_project(request, project_id):
 @login_required
 @require_POST
 def delete_project(request, project_id):
-    project = get_object_or_404(Project.objects.for_user(request.user), id=project_id)
+    project = get_object_or_404(request.user.projects, id=project_id)
     project.delete()
     return redirect('core:projects')
 
@@ -68,7 +65,7 @@ def delete_project(request, project_id):
 @login_required
 @require_GET
 def projects(request):
-    projects = Project.objects.top_level(request.user)
+    projects = request.user.projects.filter(parent_project=None)
     return render(request, 'core/pages/projects.html', {'projects': projects})
 
 def _get_initial_project_from_query_parameters(request):
@@ -77,11 +74,7 @@ def _get_initial_project_from_query_parameters(request):
     initial_project = {}
 
     if parent_project_id:
-        project = get_object_or_404(
-            Project,
-            id=parent_project_id,
-            user=request.user
-        )
+        project = get_object_or_404(request.user.projects, id=parent_project_id)
         initial_project['parent_project'] = project
 
     return initial_project

@@ -21,7 +21,11 @@ class UserSettings(models.Model):
         KANBAN = 'KANBAN', 'Kanban'
         PROJECT = 'PROJECT', 'Project'
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user_settings',
+    )
     theme = models.CharField(
         max_length=MAX_THEME_LENGTH,
         choices=Theme.choices,

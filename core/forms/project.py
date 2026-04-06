@@ -10,7 +10,9 @@ class ProjectForm(forms.ModelForm):
             'parent_project',
             "name",
         ]
-        widgets = {"name": forms.TextInput(attrs={"placeholder": "Project name",}),}
+        widgets = {
+            "name": forms.TextInput(attrs={"placeholder": "Project name",}),
+        }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)

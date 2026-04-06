@@ -12,22 +12,22 @@
         <button type="submit">Save</button>
     </form>
 
-    <h1>Subprojects</h1>
-    <a href="{% url 'core:create_project' %}?parent_project_id={{ project.id }}">Create subproject</a>
+    <h1>Child projects</h1>
+    <a href="{% url 'core:create_project' %}?parent_project_id={{ project.id }}">Create child project</a>
     <ul>
-        {% for subproject in subprojects %}
+        {% for child_project in project.child_projects.all %}
             <li>
-                <a href="{% url 'core:project' subproject.id %}">{{ subproject.name }}</a>
+                <a href="{% url 'core:project' child_project.id %}">{{ child_project.name }}</a>
             </li>
         {% empty %}
-            <p>This project has no subprojects.</p>
+            <p>This project has no child projects.</p>
         {% endfor %}
     </ul>
 
     <h1>Tasks</h1>
     <a href="{% url 'core:create_task' %}?project_id={{ project.id }}">Create task</a>
     <ul>
-        {% for task in tasks %}
+        {% for task in project.tasks.all %}
             <li>
                 {% include 'core/components/cards/task.html' with task=task %}
             </li>

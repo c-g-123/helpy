@@ -38,7 +38,6 @@ def task(request, task_id):
         'task': task,
         'link_chain': get_link_chain(task),
         'form': TaskForm(user=request.user, instance=task),
-        'subtasks': Task.objects.for_parent(task, request.user)
     }
 
     return render(request, 'core/pages/task.html',context)
@@ -59,7 +58,6 @@ def edit_task(request, task_id):
         'task': task,
         'breadcrumbs': task.get_breadcrumbs(),
         'form': form,
-        'subtasks': Task.objects.for_parent(task, request.user)
     }
 
     return render(request, 'core/pages/task.html', context)
@@ -81,18 +79,10 @@ def _get_initial_task_from_query_parameters(request):
     initial_task = {}
 
     if project_id:
-        project = get_object_or_404(
-            Project,
-            id=project_id,
-            user=request.user
-        )
+        project = get_object_or_404(request.user.projects, id=project_id)
         initial_task['project'] = project
     if parent_task_id:
-        parent_task = get_object_or_404(
-            Task,
-            id=parent_task_id,
-            project__user=request.user
-        )
+        parent_task = get_object_or_404(Task.objects.for_user(request.user), id=parent_task_id)
         initial_task['parent_task'] = parent_task
     if raw_due_datetime:
         due_datetime = datetime.fromisoformat(raw_due_datetime)

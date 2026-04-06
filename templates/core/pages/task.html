@@ -15,16 +15,13 @@
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
-    <h1>Subtasks</h1>
-    <a href="{% url 'core:create_task' %}?project_id={{ task.project.id }}&parent_task_id={{ task.id }}">Create subtask</a>
-    {% if subtasks %}
-        {% for subtask in subtasks %}
-            {% include "core/components/cards/task.html" with task=subtask %}
+    <h1>Child tasks</h1>
+    <a href="{% url 'core:create_task' %}?project_id={{ task.project.id }}&parent_task_id={{ task.id }}">Create child task</a>
+        {% for child_task in task.child_tasks.all %}
+            {% include "core/components/cards/task.html" with task=child_task %}
+        {% empty %}
+            <p>No child tasks yet.</p>
         {% endfor %}
-    {% else %}
-        <p>No subtasks yet.</p>
-    {% endif %}
-
     <form action="{% url 'core:delete_task' task.id %}" method="post" onsubmit="return confirm('Are you sure you want to delete this task?')">
         {% csrf_token %}
         <button type="submit">Delete</button>

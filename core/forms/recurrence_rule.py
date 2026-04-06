@@ -2,31 +2,18 @@ from django import forms
 from core.models import Project, Task
 
 
-INITIAL_DESCRIPTION_ROWS = 3
-
-
-class TaskForm(forms.ModelForm):
-
-    # TODO This NEEDS to check for circular references for the parent task.
+class RecurrenceRuleForm(forms.ModelForm):
 
     class Meta:
         model = Task
         fields = [
-            "project",
-            "parent_task",
-            "name",
-            "description",
-            "due_datetime",
-            'status',
+            'interval',
+            'frequency',
+            'end_datetime',
         ]
 
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Task name",}),
-            "description": forms.Textarea(attrs={
-                "placeholder": "Description",
-                "rows": INITIAL_DESCRIPTION_ROWS,
-            }),
-            "due_datetime": forms.DateTimeInput(attrs={"type": "datetime-local",}),
+            "end_datetime": forms.DateTimeInput(attrs={"type": "datetime-local",}),
         }
 
     def __init__(self, *args, **kwargs):
