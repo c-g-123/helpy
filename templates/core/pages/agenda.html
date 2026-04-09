@@ -13,11 +13,9 @@
             <div class="agenda-date">
                 {{ formatted_date }}
                 {% for task in date_data.tasks %}
-                    <div class="card card--agenda">
-                        {% include 'core/components/cards/task.html' with task=task %}
-                    </div>
+                    {% include 'core/components/cards/task.html' with task=task %}
                 {% endfor %}
-                <div class="card card--agenda">
+                <div class="card focusable">
                     <a href="{% url 'core:create_task' %}?{{ date_data.create_task_query }}">Create task</a>
                 </div>
             </div>

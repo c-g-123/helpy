@@ -1,24 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/components.css' %}">
-    <title>
-        {% block title %}
-            Helpy
-        {% endblock %}
-    </title>
-</head>
-<body>
-    {% block navigation_bar %}
-        {% include 'core/components/navigation-bars/app.html' %}
-    {% endblock %}
-    {% block body %}
-        No body.
-    {% endblock %}
-    {% block scripts %}
-    {% endblock %}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'core/css/components.css' %}">
+        <title>
+            {% block title %}
+                Helpy
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div class="box">
+            {% block navigation_bar %}
+                {% include 'core/components/navigation-bars/app.html' %}
+            {% endblock %}
+            {% block body %}
+                No body.
+            {% endblock %}
+            {% block scripts %}
+            {% endblock %}
+        </div>
+    </body>
 </html>

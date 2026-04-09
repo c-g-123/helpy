@@ -4,28 +4,36 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    background-color: green;
-    z-index: 1000;
+    z-index: 1;
 }
 
-/* --- Navbar --- */
+.box {
+    margin: 1ch;
+    border: 2px solid var(--primary);
+    background-color: var(--background);
+}
+
+.focusable {
+    margin: 2px;
+}
+
+.focusable:hover {
+    outline: 2px solid var(--primary);
+}
+
 .navbar {
+    padding: 0 5ch;
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    background-color: var(--primary);
+    gap: 5ch;
 }
 
-/* --- Nav item --- */
 .nav-item {
     position: relative;
 }
 
-/* --- Logo (image) --- */
 .nav-link {
     display: block;
-    height: 60px;        /* controls header height */
     padding: 10px;
     cursor: pointer;
 }
@@ -78,7 +86,6 @@
 }
 
 .card {
-    margin: 15px;
     transition: 0.2s;
 }
 
@@ -94,12 +101,4 @@
 
 .card a:visited {
     color: var(--text);
-}
-
-.card--agenda {
-
-}
-
-.card--agenda:hover {
-    transform: translateX(2px);
 }
