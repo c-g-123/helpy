@@ -1,0 +1,9 @@
+<nav class="breadcrumb">
+    {% for link in link_chain %}
+        {% if forloop.last %}
+            <span>{{ link.text }}</span>
+        {% else %}
+            <a href="{{ link.url }}">{{ link.text }}</a>
+        {% endif %}
+    {% endfor %}
+</nav>

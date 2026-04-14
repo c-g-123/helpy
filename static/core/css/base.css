@@ -14,24 +14,32 @@
     --shadow: #ffffff;
 }
 
-body {
-    min-width: 100vh;
-    min-height: 100vh;
+html, body {
     margin: 0;
-    padding: 0;
+    height: 100%;
     font-family: 'DejaVu Sans Mono', monospace;
     color: var(--primary);
     text-shadow: 0 0 2px var(--primary-glow);
+}
+
+.logo {
+    font-size: 4ch;
 }
 
 .spaced {
     margin: 1ch;
 }
 
-.interior-box {
-    border: 1px solid var(--primary);
+h1 {
+    margin: 1px;
+    font-size: 2.5ch;
 }
 
-.exterior-box {
-    border: 2px solid var(--primary-dim);
+h2 {
+    margin: 1px;
+    font-size: 2ch;
+}
+
+a:hover {
+    outline: 1px solid var(--primary)
 }

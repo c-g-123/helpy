@@ -4,11 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <nav>
-        {% for link in link_chain %}
-            |<a href="{{ link.url }}">{{ link.text }}</a>
-        {% endfor %}
-    </nav>
+    {% include 'core/components/link-chain.html' with link_chain=link_chain %}
     <h1>{{ project.name }}</h1>
     <form method="post" action="{% url 'core:edit_project' project_id=project.id %}">
         {% csrf_token %}

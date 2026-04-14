@@ -1,7 +1,37 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0; /* Important. */
+}
+
+.interior-box {
+    border: 1px solid var(--primary);
+}
+
+.exterior-box {
+    border: 2px solid var(--primary-dim);
+}
+
 .status-bar {
     padding: 1ch;
     display: flex;
     justify-content: space-between;
+}
+
+    .status-bar a {
+        align-content: center;
+    }
+
+.content {
+    flex: 1;
+    overflow-y: auto;
 }
 
 .navbar {
@@ -11,18 +41,47 @@
     gap: 30ch;
 }
 
-.card {
-    transition: 5s;
+    .navbar-item {
+        text-decoration: none;
+        color: var(--primary);
+    }
 
-    background-color: blue;
+    .navbar-item.active {
+        background-color: var(--primary);
+        color: var(--background);
+    }
+
+.card {
+
 }
 
     .card a {
         padding: 15px;
         display: block;
         text-decoration: none;
+        color: var(--primary);
     }
 
-        .card a:visited {
-            color: var(--text);
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+}
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: var(--primary);
+    }
+
+        .breadcrumb a::after {
+            content: "›";
+            margin-left: 1ch;
+        }
+
+        .breadcrumb a:last-child::after {
+            content: "";
+        }
+
+        .breadcrumb a:last-child {
+            font-weight: bold;
         }
